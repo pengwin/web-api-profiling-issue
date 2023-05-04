@@ -2,6 +2,7 @@ using System.Text.Json;
 using Models;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
 var app = builder.Build();
 
 const int count = 90000;

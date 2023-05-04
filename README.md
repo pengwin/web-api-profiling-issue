@@ -15,7 +15,7 @@ dotnet run -c Release -p InnerApi
 ```
 
 ```
-execution: local
+ execution: local
      script: get-data-inner.js
      output: -
 
@@ -23,20 +23,20 @@ execution: local
            * default: 10 looping VUs for 10s (gracefulStop: 30s)
 
 
-     data_received..................: 9.3 GB 924 MB/s
-     data_sent......................: 298 kB 30 kB/s
-     http_req_blocked...............: avg=11.53µs min=0s      med=0s      max=2.13ms   p(90)=0s      p(95)=0s
-     http_req_connecting............: avg=1.42µs  min=0s      med=0s      max=505.6µs  p(90)=0s      p(95)=0s
-     http_req_duration..............: avg=28.1ms  min=22.39ms med=25.69ms max=216.4ms  p(90)=31.45ms p(95)=37.92ms
-       { expected_response:true }...: avg=28.1ms  min=22.39ms med=25.69ms max=216.4ms  p(90)=31.45ms p(95)=37.92ms
-     http_req_failed................: 0.00%  ✓ 0          ✗ 3543
-     http_req_receiving.............: avg=25.02ms min=2ms     med=24.28ms max=110.18ms p(90)=29.24ms p(95)=35.04ms
-     http_req_sending...............: avg=86.95µs min=0s      med=0s      max=18.58ms  p(90)=0s      p(95)=0s
+     data_received..................: 9.1 GB 912 MB/s
+     data_sent......................: 294 kB 29 kB/s
+     http_req_blocked...............: avg=12.09µs min=0s      med=0s      max=2.45ms   p(90)=0s      p(95)=0s
+     http_req_connecting............: avg=2.88µs  min=0s      med=0s      max=1ms      p(90)=0s      p(95)=0s
+     http_req_duration..............: avg=28.51ms min=22.33ms med=26.26ms max=170.77ms p(90)=32.27ms p(95)=36.45ms
+       { expected_response:true }...: avg=28.51ms min=22.33ms med=26.26ms max=170.77ms p(90)=32.27ms p(95)=36.45ms
+     http_req_failed................: 0.00%  ✓ 0          ✗ 3497
+     http_req_receiving.............: avg=25.57ms min=2.68ms  med=24.75ms max=111.27ms p(90)=30.01ms p(95)=34ms
+     http_req_sending...............: avg=82.96µs min=0s      med=0s      max=29.51ms  p(90)=0s      p(95)=0s
      http_req_tls_handshaking.......: avg=0s      min=0s      med=0s      max=0s       p(90)=0s      p(95)=0s
-     http_req_waiting...............: avg=2.99ms  min=0s      med=1ms     max=107.21ms p(90)=7.51ms  p(95)=14.01ms
-     http_reqs......................: 3543   353.836923/s
-     iteration_duration.............: avg=28.22ms min=22.39ms med=25.79ms max=218.53ms p(90)=31.53ms p(95)=38.28ms
-     iterations.....................: 3543   353.836923/s
+     http_req_waiting...............: avg=2.84ms  min=0s      med=1ms     max=60.57ms  p(90)=7.01ms  p(95)=13.52ms
+     http_reqs......................: 3497   349.078396/s
+     iteration_duration.............: avg=28.62ms min=22.77ms med=26.34ms max=173.22ms p(90)=32.4ms  p(95)=36.99ms
+     iterations.....................: 3497   349.078396/s
      vus............................: 10     min=10       max=10
      vus_max........................: 10     min=10       max=10
 ```
@@ -48,7 +48,7 @@ dotnet run -c Release -p OuterApi
 ```
 
 ```
-execution: local
+ execution: local
      script: get-data-outer.js
      output: -
 
@@ -56,20 +56,20 @@ execution: local
            * default: 10 looping VUs for 10s (gracefulStop: 30s)
 
 
-     data_received..................: 1.6 GB 162 MB/s
-     data_sent......................: 53 kB  5.2 kB/s
-     http_req_blocked...............: avg=29.68µs  min=0s      med=0s       max=1.71ms   p(90)=0s       p(95)=0s
+     data_received..................: 1.9 GB 188 MB/s
+     data_sent......................: 61 kB  6.1 kB/s
+     http_req_blocked...............: avg=42.85µs  min=0s      med=0s       max=2.62ms   p(90)=0s       p(95)=0s
      http_req_connecting............: avg=0s       min=0s      med=0s       max=0s       p(90)=0s       p(95)=0s
-     http_req_duration..............: avg=160.06ms min=110.3ms med=149.72ms max=471.18ms p(90)=196.25ms p(95)=210.04ms
-       { expected_response:true }...: avg=160.06ms min=110.3ms med=149.72ms max=471.18ms p(90)=196.25ms p(95)=210.04ms
-     http_req_failed................: 0.00%  ✓ 0         ✗ 627
-     http_req_receiving.............: avg=38.37ms  min=5.16ms  med=32.81ms  max=128.48ms p(90)=58.48ms  p(95)=77.1ms
-     http_req_sending...............: avg=196.69µs min=0s      med=0s       max=18.16ms  p(90)=0s       p(95)=452.31µs
+     http_req_duration..............: avg=138.04ms min=87.84ms med=126.37ms max=428.52ms p(90)=164.23ms p(95)=180.8ms
+       { expected_response:true }...: avg=138.04ms min=87.84ms med=126.37ms max=428.52ms p(90)=164.23ms p(95)=180.8ms
+     http_req_failed................: 0.00%  ✓ 0         ✗ 727
+     http_req_receiving.............: avg=31.95ms  min=4.4ms   med=28.68ms  max=114.28ms p(90)=43.42ms  p(95)=55.36ms
+     http_req_sending...............: avg=229.81µs min=0s      med=0s       max=17.74ms  p(90)=0s       p(95)=507.07µs
      http_req_tls_handshaking.......: avg=0s       min=0s      med=0s       max=0s       p(90)=0s       p(95)=0s
-     http_req_waiting...............: avg=121.49ms min=81.28ms med=113.04ms max=342.76ms p(90)=153.47ms p(95)=168.47ms
-     http_reqs......................: 627    62.051109/s
-     iteration_duration.............: avg=160.31ms min=110.3ms med=149.8ms  max=472.9ms  p(90)=196.88ms p(95)=210.47ms
-     iterations.....................: 627    62.051109/s
+     http_req_waiting...............: avg=105.86ms min=74.37ms med=96.84ms  max=314.93ms p(90)=126.7ms  p(95)=143.09ms
+     http_reqs......................: 727    72.041762/s
+     iteration_duration.............: avg=138.26ms min=87.84ms med=126.43ms max=431.15ms p(90)=164.75ms p(95)=181.06ms
+     iterations.....................: 727    72.041762/s
      vus............................: 10     min=10      max=10
      vus_max........................: 10     min=10      max=10
 ```

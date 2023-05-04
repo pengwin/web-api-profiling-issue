@@ -3,6 +3,7 @@ using OuterApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<InnerApiClient>();
 
