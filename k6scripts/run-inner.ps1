@@ -1,1 +1,0 @@
-k6 run --vus 10 --duration 10s get-data-inner.js

@@ -7,16 +7,14 @@ namespace OuterApi;
 public class InnerApiClient
 {
     private readonly HttpClient _client;
-    private readonly JsonSerializerOptions _options;
-    
+
     public InnerApiClient(IHttpClientFactory clientFactory)
     {
         _client = clientFactory.CreateClient();
         _client.BaseAddress = new Uri("http://localhost:5001");
-        _options = new JsonSerializerOptions();
     }
 
-    public async Task<ModelDto[]> GetDataAsync(CancellationToken cancellationToken)
+    public async Task<ModelDto[]> GetDataAsync(JsonSerializerOptions options, CancellationToken cancellationToken)
     {
         var response = await _client.GetAsync("/data", cancellationToken);
         if (!response.IsSuccessStatusCode)
@@ -24,7 +22,7 @@ public class InnerApiClient
             throw new HttpRequestException("Bad request", null, HttpStatusCode.BadRequest);
         }
 
-        var result = await response.Content.ReadFromJsonAsync<ModelDto[]>(_options, cancellationToken);
+        var result = await response.Content.ReadFromJsonAsync<ModelDto[]>(options, cancellationToken);
         return result!;
     }
 }

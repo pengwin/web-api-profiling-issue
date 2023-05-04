@@ -5,18 +5,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 var app = builder.Build();
 
-const int count = 90000;
-ModelDto[] data = Enumerable
-    .Range(0, count)
-    .Select(_ => new ModelDto
-    {
-        Name = "ABC",
-        Amount = 1000
-    })
-    .ToArray();
-
 JsonSerializerOptions options = new();
 
-app.MapGet("/data", () => Task.FromResult(Results.Json(data, options, "application/json", 200)));
+app.MapGet("/data", async (HttpResponse response, CancellationToken cancellationToken) =>
+{
+    var data = ModelDto.CreateData();
+    response.ContentType = "application/json";
+    response.StatusCode = 200;
+    await JsonSerializer.SerializeAsync(response.Body, data, options, cancellationToken);
+});
 
 app.Run();
