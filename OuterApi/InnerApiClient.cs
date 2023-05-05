@@ -16,7 +16,7 @@ public class InnerApiClient
 
     public async Task<ModelDto[]> GetDataAsync(JsonSerializerOptions options, CancellationToken cancellationToken)
     {
-        var response = await _client.GetAsync("/data", cancellationToken);
+        var response = await _client.GetAsync("/data", HttpCompletionOption.ResponseHeadersRead, cancellationToken);
         if (!response.IsSuccessStatusCode)
         {
             throw new HttpRequestException("Bad request", null, HttpStatusCode.BadRequest);
@@ -28,7 +28,7 @@ public class InnerApiClient
     
     public async Task<Stream> GetDataStreamAsync(CancellationToken cancellationToken)
     {
-        var response = await _client.GetAsync("/data", cancellationToken);
+        var response = await _client.GetAsync("/data", HttpCompletionOption.ResponseHeadersRead, cancellationToken);
         if (!response.IsSuccessStatusCode)
         {
             throw new HttpRequestException("Bad request", null, HttpStatusCode.BadRequest);
