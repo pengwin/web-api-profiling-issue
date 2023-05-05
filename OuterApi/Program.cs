@@ -13,6 +13,8 @@ var app = builder.Build();
 
 JsonSerializerOptions options = new();
 
+var serializer = new ModelDtoStreamSerializer(2000);
+
 app.MapGet("/data", async ([FromServices] InnerApiClient client, HttpResponse response,  CancellationToken cancellationToken) =>
 {
     var data = await client.GetDataAsync(options, cancellationToken);
@@ -22,7 +24,7 @@ app.MapGet("/data", async ([FromServices] InnerApiClient client, HttpResponse re
     }
     response.ContentType = "application/json";
     response.StatusCode = 200;
-    await JsonSerializer.SerializeAsync(response.Body, data, options, cancellationToken);
+    await serializer.SerializeAsync(response.Body, data, cancellationToken);
 });
 
 app.MapGet("/data-proxy", async ([FromServices] InnerApiClient client, HttpResponse response,  CancellationToken cancellationToken) =>
