@@ -20,9 +20,9 @@ export const options = {
       vus: commonOptions.vus,
       duration: commonOptions.duration,
     },
-    'outerSelfApi': {
+    'outerProxyApi': {
       executor: 'constant-vus',
-      exec: 'outerSelfApi',
+      exec: 'outerProxyApi',
       vus: commonOptions.vus,
       duration: commonOptions.duration,
     },
@@ -31,7 +31,7 @@ export const options = {
 
 const innerApiCounter = new Counter('Counter InnerApi');
 const outerApiCounter = new Counter('Counter OuterApi');
-const outerApiSelfCounter = new Counter('Counter OuterApiSelf');
+const outerApiProxyCounter = new Counter('Counter OuterApiProxy');
 
 export function innerApi() {
   http.get('http://localhost:5001/data', { tags: { name: 'inner-api/data'} });
@@ -43,22 +43,27 @@ export function outerApi() {
   outerApiCounter.add(1);
 }
 
-export function outerSelfApi() {
-  http.get('http://localhost:5002/data-self', { tags: { name: 'outer-api/data-self'} });
-  outerApiSelfCounter.add(1);
+
+export function outerProxyApi() {
+  http.get('http://localhost:5002/data-proxy', { tags: { name: 'outer-api/data-proxy'} });
+  outerApiProxyCounter.add(1);
 }
 
 export function handleSummary(data) {
   const innerMetrics = data.metrics['Counter InnerApi'].values;
   const outerMetrics = data.metrics['Counter OuterApi'].values;
-  const outerSelfMetrics = data.metrics['Counter OuterApiSelf'].values;
+  const outerProxyMetrics = data.metrics['Counter OuterApiProxy'].values;
+
+  const innerRatio = (100*innerMetrics.count/innerMetrics.count).toFixed(2);
+  const outerRatio = (100*outerMetrics.count/innerMetrics.count).toFixed(2);
+  const outerProxyRatio = (100*outerProxyMetrics.count/innerMetrics.count).toFixed(2);
 
   let result = '\n';
-  result += '| Metrics | Count | Rate |\n';
-  result += '| ------- | ----- | ---- |\n';
-  result += `| Counter InnerApi | ${innerMetrics.count} | ${innerMetrics.rate}/s |\n`;
-  result += `| Counter OuterApi | ${outerMetrics.count} | ${outerMetrics.rate}/s |\n`;
-  result += `| Counter OuterApiSelf | ${outerSelfMetrics.count} | ${outerSelfMetrics.rate}/s |\n`;
+  result += '| Metrics | Count | Rate | Ratio |\n';
+  result += '| ------- | ----- | ---- | ----- |\n';
+  result += `| Counter InnerApi | ${innerMetrics.count} | ${innerMetrics.rate}/s | ${innerRatio}% |\n`;
+  result += `| Counter OuterApi | ${outerMetrics.count} | ${outerMetrics.rate}/s | ${outerRatio}% | \n`;
+  result += `| Counter OuterApiProxy | ${outerProxyMetrics.count} | ${outerProxyMetrics.rate}/s | ${outerProxyRatio}% |\n`;
 
   return {
     stdout: result

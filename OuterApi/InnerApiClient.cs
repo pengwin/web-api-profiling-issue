@@ -25,4 +25,16 @@ public class InnerApiClient
         var result = await response.Content.ReadFromJsonAsync<ModelDto[]>(options, cancellationToken);
         return result!;
     }
+    
+    public async Task<Stream> GetDataStreamAsync(CancellationToken cancellationToken)
+    {
+        var response = await _client.GetAsync("/data", cancellationToken);
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new HttpRequestException("Bad request", null, HttpStatusCode.BadRequest);
+        }
+
+        var result = await response.Content.ReadAsStreamAsync(cancellationToken);
+        return result;
+    }
 }

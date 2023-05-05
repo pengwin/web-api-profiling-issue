@@ -16,17 +16,22 @@ JsonSerializerOptions options = new();
 app.MapGet("/data", async ([FromServices] InnerApiClient client, HttpResponse response,  CancellationToken cancellationToken) =>
 {
     var data = await client.GetDataAsync(options, cancellationToken);
+    foreach (var dto in data)
+    {
+        dto.Amount /= 1000;
+    }
     response.ContentType = "application/json";
     response.StatusCode = 200;
     await JsonSerializer.SerializeAsync(response.Body, data, options, cancellationToken);
 });
 
-app.MapGet("/data-self", async (HttpResponse response, CancellationToken cancellationToken) =>
+app.MapGet("/data-proxy", async ([FromServices] InnerApiClient client, HttpResponse response,  CancellationToken cancellationToken) =>
 {
-    var data = ModelDto.CreateData();
+    var result = await client.GetDataStreamAsync(cancellationToken);
     response.ContentType = "application/json";
     response.StatusCode = 200;
-    await JsonSerializer.SerializeAsync(response.Body, data, options, cancellationToken);
+
+    await result.CopyToAsync(response.Body, cancellationToken);
 });
 
 app.Run();
