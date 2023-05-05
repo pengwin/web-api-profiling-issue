@@ -20,6 +20,6 @@ dotnet run -c Release -p OuterApi
 
 | Metrics | Count | Rate | Ratio |
 | ------- | ----- | ---- | ----- |
-| Counter InnerApi | 763 | 75.76454694444314/s | 100.00% |
-| Counter OuterApi | 306 | 30.385257359108255/s | 40.10% |
-| Counter OuterApiProxy | 725 | 71.99121433122055/s | 95.02% |
+| Counter InnerApi | 918 | 91.46195569712387/s | 100.00% |
+| Counter OuterApi | 311 | 30.985477365801223/s | 33.88% |
+| Counter OuterApiProxy | 813 | 81.00062089516526/s | 88.56% |
